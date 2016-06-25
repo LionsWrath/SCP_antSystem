@@ -7,16 +7,6 @@
 #include <pthread.h>
 #include <time.h>
 
-//Pensar nas seguintes estruturas:
-//  -Solução - matrix formiga*solucao
-//  -Dados 
-//  -Feromônios - Matrix formiga*feromonios
-//  -Informação Heurística - Matrix formiga*feromonios
-//  -Probabilidades
-//  -Componentes Candidatos
-//
-//  -> Como Achar Componentes Candidatos
-
 #define Q 100.0f
 
 typedef struct _Session {
@@ -353,7 +343,7 @@ void initializeSolutions(Session * session, Solution * solutions) {
         memset(solutions[j].setsChoosed, 0, session->numberOfSets*sizeof(bool));
         memset(solutions[j].numbersCovered, 0, session->universeSet*sizeof(bool));
 
-        solutions[j].weight = 0;
+        solutions[j].weight = INFINITY;
     }    
 }
 
