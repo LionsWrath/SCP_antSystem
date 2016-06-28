@@ -326,13 +326,12 @@ int main(int argc, char *argv[]) {
     char filename[50];
     int oc, cycles;
     clock_t stime, ftime;
-
-    srand(time(NULL));
+    time_t seed = time(NULL);
 
     Session session; 
 
     //Falta: 
-    while ((oc = getopt(argc, argv, "a:b:r:f:n:c:")) != -1) {
+    while ((oc = getopt(argc, argv, "a:b:r:f:n:c:s:")) != -1) {
         switch(oc) {
             case 'a':
                 session.alpha = atof(optarg);
@@ -343,7 +342,7 @@ int main(int argc, char *argv[]) {
             case 'r':
                 session.rho = atof(optarg);
                 break;
-            case 'f':
+                case 'f':
                 strcpy(filename, optarg);
                 break;
             case 'n':
@@ -352,9 +351,13 @@ int main(int argc, char *argv[]) {
             case 'c':
                 cycles = atoi(optarg);
                 break;
+            case 's':
+                seed = (time_t)atoi(optarg);
+                break;
         }
     }
 
+    srand(seed);
     readFile(filename, &session);
 
     Solution * solution = malloc(session.antNumber*sizeof(Solution));
@@ -412,4 +415,6 @@ int main(int argc, char *argv[]) {
     
     printf("Total time: %f\n\n", elapsed);
     printBestSolution(&session, &bestSolution);
+
+    return 0;
 }

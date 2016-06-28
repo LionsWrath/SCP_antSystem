@@ -363,13 +363,12 @@ int main(int argc, char *argv[]) {
     FILE *in;
     char filename[50];
     int oc, cycles, numberOfThreads = 1;
-
-    srand(time(NULL));
+    time_t seed = time(NULL);
 
     Session session; 
 
     //Falta: 
-    while ((oc = getopt(argc, argv, "a:b:r:f:n:c:t:")) != -1) {
+    while ((oc = getopt(argc, argv, "a:b:r:f:n:c:s:t:")) != -1) {
         switch(oc) {
             case 'a':
                 session.alpha = atof(optarg);
@@ -389,13 +388,16 @@ int main(int argc, char *argv[]) {
             case 'c':
                 cycles = atoi(optarg);
                 break;
+            case 's':
+                seed = (time_t)atoi(optarg);
+                break;
             case 't':
                 numberOfThreads = atoi(optarg);
                 break;
         }
     }
 
-
+    srand(seed);
     readFile(filename, &session);
 
     Solution * solutions = malloc(session.antNumber*sizeof(Solution));
